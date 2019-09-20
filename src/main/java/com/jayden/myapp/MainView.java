@@ -1,14 +1,14 @@
 package com.jayden.myapp;
 
-import com.vaadin.flow.component.Key;
+import com.jayden.myapp.domain.Customer;
+import com.jayden.myapp.domain.CustomerForm;
+import com.jayden.myapp.domain.CustomerService;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.checkbox.Checkbox;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.TextField;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
@@ -16,23 +16,45 @@ import com.vaadin.flow.server.PWA;
 @PWA(name = "Project Base for Vaadin Flow with Spring", shortName = "Project Base")
 public class MainView extends VerticalLayout {
 
-    public MainView(@Autowired MessageBean bean) {
-        VerticalLayout todosList = new VerticalLayout();
-        TextField taskField = new TextField();
-        Button addButton = new Button("Add");
-        addButton.addClickShortcut(Key.ENTER);
-        addButton.addClickListener(click -> {
-            Checkbox checkbox = new Checkbox(taskField.getValue());
-            todosList.add(checkbox);
+    private TextField filterText = new TextField();
+
+    private CustomerService customerService = CustomerService.getInstance();
+    private Grid<Customer> grid = new Grid<>(Customer.class);
+
+    private CustomerForm form = new CustomerForm(this);
+
+    public MainView() {
+        filterText.setPlaceholder("Filter by name...");
+        filterText.setClearButtonVisible(true);
+        filterText.setValueChangeMode(ValueChangeMode.EAGER);
+        filterText.addValueChangeListener(event -> updateList());
+
+        grid.setColumns("firstName", "lastName", "status");
+        grid.asSingleSelect().addValueChangeListener(event ->
+            form.setCustomer(grid.asSingleSelect().getValue()));
+
+        Button addCustomerBtn = new Button("Add new customer");
+        addCustomerBtn.addClickListener(e -> {
+            grid.asSingleSelect().clear();
+            form.setCustomer(new Customer());
         });
 
-        add(
-            new H1("Vaadin Todo"),
-            todosList,
-            new HorizontalLayout(
-                taskField,
-                addButton
-            )
-        );
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, addCustomerBtn);
+
+        HorizontalLayout mainContent = new HorizontalLayout(grid, form);
+        mainContent.setSizeFull();
+        grid.setSizeFull();
+
+        add(toolbar, mainContent);
+
+        updateList();
+        setSizeFull();
+
+        form.setCustomer(null);
     }
+
+    public void updateList() {
+        grid.setItems(customerService.findAll(filterText.getValue()));
+    }
+
 }
