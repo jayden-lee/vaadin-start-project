@@ -1,4 +1,4 @@
-package com.jayden.myapp;
+package com.jayden.admin;
 
 import org.junit.Assert;
 import org.junit.Before;

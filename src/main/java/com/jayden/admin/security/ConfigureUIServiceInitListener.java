@@ -1,6 +1,6 @@
-package com.jayden.myapp.security;
+package com.jayden.admin.security;
 
-import com.jayden.myapp.view.login.LoginView;
+import com.jayden.admin.view.login.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;

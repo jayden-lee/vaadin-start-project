@@ -1,4 +1,4 @@
-package com.jayden.myapp.security;
+package com.jayden.admin.security;
 
 import com.vaadin.flow.server.ServletHelper;
 import com.vaadin.flow.shared.ApplicationConstants;

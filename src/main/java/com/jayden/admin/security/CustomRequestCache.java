@@ -1,4 +1,4 @@
-package com.jayden.myapp.security;
+package com.jayden.admin.security;
 
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
@@ -13,5 +13,4 @@ class CustomRequestCache extends HttpSessionRequestCache {
             super.saveRequest(request, response);
         }
     }
-
 }
