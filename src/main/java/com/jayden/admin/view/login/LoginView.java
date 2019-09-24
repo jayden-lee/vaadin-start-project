@@ -2,9 +2,17 @@ package com.jayden.admin.view.login;
 
 import com.jayden.admin.service.login.LoginService;
 import com.jayden.admin.view.dashboard.DashboardView;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyDownEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -36,17 +44,26 @@ public class LoginView extends VerticalLayout {
         layout.setAlignItems(Alignment.CENTER);
         layout.setSizeFull();
 
+        Label label = new Label("Admin App Pro");
+        layout.add(label);
+
         idField = new TextField("Username");
         idField.setPlaceholder("admin");
         idField.setRequiredIndicatorVisible(true);
+        idField.addKeyDownListener(Key.ENTER, (ComponentEventListener<KeyDownEvent>) event -> passwordField.focus());
+        idField.addKeyDownListener(Key.NUMPAD_ENTER, (ComponentEventListener<KeyDownEvent>) event -> passwordField.focus());
         idField.focus();
 
         passwordField = new PasswordField("Password");
         passwordField.setPlaceholder("!@#");
+        passwordField.setRequiredIndicatorVisible(true);
+        passwordField.addKeyDownListener(Key.ENTER, (ComponentEventListener<KeyDownEvent>) event -> doLogin());
+        passwordField.addKeyDownListener(Key.NUMPAD_ENTER, (ComponentEventListener<KeyDownEvent>) event -> doLogin());
 
         layout.add(idField, passwordField);
 
         loginButton = new Button("Sign in");
+        loginButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         loginButton.addClickListener(event -> doLogin());
 
         layout.add(loginButton);
