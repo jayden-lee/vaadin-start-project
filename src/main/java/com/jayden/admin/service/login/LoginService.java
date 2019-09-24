@@ -28,4 +28,8 @@ public class LoginService {
             return false;
         }
     }
+
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
 }
