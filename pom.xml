@@ -117,6 +117,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Vaadin App Layout -->
+        <dependency>
+            <groupId>com.github.appreciated</groupId>
+            <artifactId>app-layout-addon</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

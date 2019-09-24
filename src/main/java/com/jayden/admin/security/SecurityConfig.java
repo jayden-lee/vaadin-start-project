@@ -25,25 +25,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailService;
 
     public SecurityConfig() {
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/")
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .csrf().disable()
+        http.csrf().disable()
             .requestCache().requestCache(new CustomRequestCache())
             .and()
             .authorizeRequests().requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
             .anyRequest().authenticated()
-            .and().formLogin().loginPage(LOGIN_URL).permitAll();
+            .and()
+            .formLogin().loginPage(LOGIN_URL).permitAll();
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
             "/VAADIN/**",
             "/favicon.ico",
@@ -54,9 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/icons/**",
             "/images/**",
             "/frontend/**",
-            "/webjars/**",
-            "/frontend-es5/**",
-            "/frontend-es6/**");
+            "/webjars/**");
     }
 
     @Override
