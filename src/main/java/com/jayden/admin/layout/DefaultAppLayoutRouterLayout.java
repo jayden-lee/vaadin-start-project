@@ -8,6 +8,7 @@ import com.github.appreciated.app.layout.addons.profile.builder.AppBarProfileBut
 import com.github.appreciated.app.layout.component.appbar.AppBarBuilder;
 import com.github.appreciated.app.layout.component.applayout.LeftLayouts;
 import com.github.appreciated.app.layout.component.builder.AppLayoutBuilder;
+import com.github.appreciated.app.layout.component.menu.left.LeftSubmenu;
 import com.github.appreciated.app.layout.component.menu.left.builder.LeftAppMenuBuilder;
 import com.github.appreciated.app.layout.component.menu.left.builder.LeftSubMenuBuilder;
 import com.github.appreciated.app.layout.component.menu.left.items.LeftClickableItem;
@@ -41,11 +42,6 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
 
     public DefaultAppLayoutRouterLayout() {
         notifications.addClickListener(notification -> {/* ... */});
-        notifications.add(new DefaultNotification("Test1", "Test1"),
-            new DefaultNotification("Test2", "Test2"),
-            new DefaultNotification("Test3", "Test3"),
-            new DefaultNotification("Test4", "Test4")
-        );
 
         ProfileButton profileButton = AppBarProfileButtonBuilder.get()
             .withItem("Your profile", event -> openProfile())
@@ -58,21 +54,15 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
             .build();
 
         LeftNavigationItem home = new LeftNavigationItem("Home", VaadinIcon.HOME.create(), View1.class);
-        LeftNavigationItem menu = new LeftNavigationItem("Menu", VaadinIcon.MENU.create(), View8.class);
+
+        LeftSubmenu grid = LeftSubMenuBuilder
+            .get("Grid", VaadinIcon.PLUS.create())
+            .add(new LeftNavigationItem("Plain Grid", VaadinIcon.GRID.create(), GridTest.class),
+                new LeftNavigationItem("Search Grid", VaadinIcon.GRID_BEVEL.create(), SearchGridTest.class))
+            .build();
 
         LeftAppMenuBuilder leftAppMenuBuilder = LeftAppMenuBuilder.get();
-        leftAppMenuBuilder.add(home,
-            new LeftNavigationItem("Grid", VaadinIcon.TABLE.create(), GridTest.class),
-            LeftSubMenuBuilder
-                .get("My Submenu 1", VaadinIcon.PLUS.create())
-                .add(LeftSubMenuBuilder.get("My Submenu 2", VaadinIcon.PLUS.create())
-                        .add(new LeftNavigationItem("Charts", VaadinIcon.SPLINE_CHART.create(), View2.class),
-                            new LeftNavigationItem("Contact", VaadinIcon.CONNECT.create(), View3.class),
-                            new LeftNavigationItem("More", VaadinIcon.COG.create(), View4.class))
-                        .build(),
-                    new LeftNavigationItem("Contact1", VaadinIcon.CONNECT.create(), View5.class),
-                    new LeftNavigationItem("More1", VaadinIcon.COG.create(), View6.class))
-                .build(),
+        leftAppMenuBuilder.add(home, grid,
             new LeftSectionItem(),
             LeftSubMenuBuilder
                 .get("My Submenu 3")
@@ -80,9 +70,7 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
                     VaadinIcon.CONNECT.create(),
                     View7.class
                 ))
-                .build(),
-            new LeftSectionItem("Test"),
-            menu);
+                .build());
 
         leftAppMenuBuilder.withStickyFooter()
             .addToSection(FOOTER,
@@ -137,4 +125,5 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
         UI.getCurrent().getSession().close();
         UI.getCurrent().getPage().reload();
     }
+
 }

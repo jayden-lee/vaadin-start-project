@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = DashboardView.ROUTE, layout = DefaultAppLayoutRouterLayout.class)
 public class DashboardView extends VerticalLayout {
 
-    public static final String ROUTE = "dashboard";
+    public static final String ROUTE = "";
 
     public DashboardView(@Autowired MessageBean bean) {
         Button button = new Button("Click me",

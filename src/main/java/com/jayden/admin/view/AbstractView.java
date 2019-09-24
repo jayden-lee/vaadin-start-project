@@ -19,7 +19,6 @@ public abstract class AbstractView extends HorizontalLayout {
         getElement()
             .getStyle()
             .set("overflow", "auto");
-
     }
 
     public abstract String getViewName();
