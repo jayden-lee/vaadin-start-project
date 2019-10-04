@@ -2,9 +2,6 @@
 # Created by https://www.gitignore.io/api/eclipse,java-web,intellij+all
 # Edit at https://www.gitignore.io/?templates=eclipse,java-web,intellij+all
 
-# Node Modules
-node_modules/
-
 ### Eclipse ###
 .metadata
 bin/
@@ -163,5 +160,10 @@ modules.xml
 ### Java-Web ###
 ## ignoring target file
 target/
+
+# Node Modules
+node_modules
+dist/*
+*.log
 
 # End of https://www.gitignore.io/api/eclipse,java-web,intellij+all

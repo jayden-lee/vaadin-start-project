@@ -196,12 +196,6 @@
             <version>2.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.7</version>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -231,6 +225,12 @@
             <groupId>org.hashids</groupId>
             <artifactId>hashids</artifactId>
             <version>1.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.1</version>
         </dependency>
 
         <!-- Jackson -->

@@ -2,7 +2,6 @@ package com.jayden.admin.layout;
 
 import com.github.appreciated.app.layout.addons.notification.DefaultNotificationHolder;
 import com.github.appreciated.app.layout.addons.notification.component.NotificationButton;
-import com.github.appreciated.app.layout.addons.notification.entity.DefaultNotification;
 import com.github.appreciated.app.layout.addons.profile.ProfileButton;
 import com.github.appreciated.app.layout.addons.profile.builder.AppBarProfileButtonBuilder;
 import com.github.appreciated.app.layout.component.appbar.AppBarBuilder;
@@ -11,24 +10,19 @@ import com.github.appreciated.app.layout.component.builder.AppLayoutBuilder;
 import com.github.appreciated.app.layout.component.menu.left.LeftSubmenu;
 import com.github.appreciated.app.layout.component.menu.left.builder.LeftAppMenuBuilder;
 import com.github.appreciated.app.layout.component.menu.left.builder.LeftSubMenuBuilder;
-import com.github.appreciated.app.layout.component.menu.left.items.LeftClickableItem;
 import com.github.appreciated.app.layout.component.menu.left.items.LeftNavigationItem;
-import com.github.appreciated.app.layout.component.menu.left.items.LeftSectionItem;
 import com.github.appreciated.app.layout.component.router.AppLayoutRouterLayout;
 import com.jayden.admin.service.login.LoginService;
-import com.jayden.admin.view.dashboard.sample.*;
+import com.jayden.admin.view.list.BasicListView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static com.github.appreciated.app.layout.entity.Section.FOOTER;
 
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
@@ -44,48 +38,33 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
         notifications.addClickListener(notification -> {/* ... */});
 
         ProfileButton profileButton = AppBarProfileButtonBuilder.get()
-            .withItem("Your profile", event -> openProfile())
-            .withItem("Settings", event -> openSettings())
-            .withItem("Sign out", event -> doSignOut())
-            .build();
+                .withItem("Your profile", event -> openProfile())
+                .withItem("Settings", event -> openSettings())
+                .withItem("Sign out", event -> doSignOut())
+                .build();
 
         Component appBar = AppBarBuilder.get()
-            .add(new NotificationButton<>(VaadinIcon.BELL, notifications), profileButton)
-            .build();
-
-        LeftNavigationItem home = new LeftNavigationItem("Home", VaadinIcon.HOME.create(), View1.class);
+                .add(new NotificationButton<>(VaadinIcon.BELL, notifications), profileButton)
+                .build();
 
         LeftSubmenu grid = LeftSubMenuBuilder
-            .get("Grid", VaadinIcon.PLUS.create())
-            .add(new LeftNavigationItem("Plain Grid", VaadinIcon.GRID.create(), GridTest.class),
-                new LeftNavigationItem("Search Grid", VaadinIcon.GRID_BEVEL.create(), SearchGridTest.class))
-            .build();
+                .get("List", VaadinIcon.PLUS.create())
+                .add(new LeftNavigationItem("Basic List", VaadinIcon.GRID.create(), BasicListView.class))
+                .build();
 
         LeftAppMenuBuilder leftAppMenuBuilder = LeftAppMenuBuilder.get();
-        leftAppMenuBuilder.add(home, grid,
-            new LeftSectionItem(),
-            LeftSubMenuBuilder
-                .get("My Submenu 3")
-                .add(new LeftNavigationItem("Contact2",
-                    VaadinIcon.CONNECT.create(),
-                    View7.class
-                ))
-                .build());
-
-        leftAppMenuBuilder.withStickyFooter()
-            .addToSection(FOOTER,
-                new LeftClickableItem("Footer Clickable!", VaadinIcon.COG.create(), clickEvent -> Notification.show("Clicked!")));
+        leftAppMenuBuilder.add(grid).build();
 
         Component appMenu = leftAppMenuBuilder
-            .build();
+                .build();
 
         init(AppLayoutBuilder
-            .get(LeftLayouts.LeftResponsive.class)
-            .withIcon("images/logo.png")
-            .withTitle(TITLE)
-            .withAppBar(appBar)
-            .withAppMenu(appMenu)
-            .build());
+                .get(LeftLayouts.LeftResponsive.class)
+                .withIcon("images/logo.png")
+                .withTitle(TITLE)
+                .withAppBar(appBar)
+                .withAppMenu(appMenu)
+                .build());
     }
 
     private void openProfile() {
@@ -125,5 +104,4 @@ public class DefaultAppLayoutRouterLayout extends AppLayoutRouterLayout {
         UI.getCurrent().getSession().close();
         UI.getCurrent().getPage().reload();
     }
-
 }
