@@ -1,5 +1,5 @@
 # Tutorial Project Base for Vaadin Flow and Spring Boot
-> Vaadin UI와 Spring Boot를 사용해서 Admin 사이트를 만들어보는 Repo
+> This is a project to create admin site using Vaadin UI and Spring Boot.
 
 ## Prerequisite
 - Install JDK 8 or later and Node.js 10
